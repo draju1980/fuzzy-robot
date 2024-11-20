@@ -57,6 +57,30 @@ def read_rss_feed(url):
             message = f"Title: {latest_entry.title}\nLink: {latest_entry.link}\nDescription: {description_text}"
             return message
     return None
+    def parse_pub_date(pub_date_str):
+        """
+        Parse the pubDate string from the RSS feed and return a datetime object.
+        """
+        return datetime.strptime(pub_date_str, '%a, %d %b %Y %H:%M:%S %z')
+
+    def read_rss_feed(url):
+        """
+        Read the RSS feed from the given URL and return the latest message
+        if it was posted within the last hour.
+        """
+        feed = feedparser.parse(url)
+        if feed.entries:
+            latest_entry = feed.entries[0]
+            pub_date_str = latest_entry.get('published', latest_entry.get('pubDate'))
+            if pub_date_str:
+                published_time = parse_pub_date(pub_date_str)
+                one_hour_ago = datetime.now(published_time.tzinfo) - timedelta(hours=1)
+                if published_time > one_hour_ago:
+                    soup = BeautifulSoup(latest_entry.description, 'html.parser')
+                    description_text = soup.get_text(separator=' ')
+                    message = f"Title: {latest_entry.title}\nLink: {latest_entry.link}\nDescription: {description_text}"
+                    return message
+        return None
 
 if __name__ == "__main__":
     # Load secrets from environment variables
@@ -74,9 +98,8 @@ if __name__ == "__main__":
     if latest_message:
         # Check if the message is a scheduled event
         is_scheduled_event = "THIS IS A SCHEDULED EVENT" in latest_message
-        # Check if the current time is between midnight and 1am
-        now = datetime.now()
-        is_midnight = now.hour == 0 and now.minute < 60
+        # Check if the current hour is midnight
+        is_midnight = datetime.now().hour == 0
 
         # Send messages based on conditions
         if is_scheduled_event:
