@@ -74,8 +74,9 @@ if __name__ == "__main__":
     if latest_message:
         # Check if the message is a scheduled event
         is_scheduled_event = "THIS IS A SCHEDULED EVENT" in latest_message
-        # Check if the current hour is midnight
-        is_midnight = datetime.now().hour == 0
+        # Check if the current time is between midnight and 1am
+        now = datetime.now()
+        is_midnight = now.hour == 0 and now.minute < 60
 
         # Send messages based on conditions
         if is_scheduled_event:
