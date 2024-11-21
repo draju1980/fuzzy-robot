@@ -84,8 +84,8 @@ def read_rss_feed(url):
 
 if __name__ == "__main__":
     # Load secrets from environment variables
-    discord_webhook_url = os.getenv('DISCORD_WEBHOOK_URL')
-    slack_webhook_url = os.getenv('SLACK_WEBHOOK_URL')
+    discord_webhook_url = os.getenv('DISCORD_WEBHOOK')
+    slack_webhook_url = os.getenv('SLACK_WEBHOOK')
     telegram_bot_token = os.getenv('TELEGRAM_BOT_TOKEN')
     telegram_chat_id = os.getenv('TELEGRAM_CHAT_ID')
     
