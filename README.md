@@ -23,8 +23,8 @@ pip3 install -r requirements.txt
 
 3. Create a .env file in the root directory of the project and add your webhook URLs and tokens:
 ```sh
-DISCORD_WEBHOOK_URL=https://discord.com/api/webhooks/xxx
-SLACK_WEBHOOK_URL=https://hooks.slack.com/services/yyy
+DISCORD_WEBHOOKL=https://discord.com/api/webhooks/xxx
+SLACK_WEBHOOK=https://hooks.slack.com/services/yyy
 TELEGRAM_BOT_TOKEN=xxxx
 TELEGRAM_CHAT_ID=yyyyy
 ```
