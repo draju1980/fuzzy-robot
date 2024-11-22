@@ -1,39 +1,39 @@
-name: Send Notification Every Hour to Discord, Slack, and Telegram
+# name: Send Notification Every Hour to Discord, Slack, and Telegram
 
-on:
-  push:
-    branches:
-      - master
-  schedule:
-    # - cron: '0 * * * *' # Run every hour
-      - cron: '*/30 * * * *' # Run every 30 minutes
+# on:
+#   push:
+#     branches:
+#       - master
+#   schedule:
+#     # - cron: '0 * * * *' # Run every hour
+#       - cron: '*/30 * * * *' # Run every 30 minutes
 
-jobs:
-  cleanup-old-branches:
-    name: Run python notification script every hour
-    runs-on: ubuntu-latest
-    if: github.event_name == 'schedule'
-    steps:
-      - name: Checkout code
-        uses: actions/checkout@v4
+# jobs:
+#   cleanup-old-branches:
+#     name: Run python notification script every hour
+#     runs-on: ubuntu-latest
+#     if: github.event_name == 'schedule'
+#     steps:
+#       - name: Checkout code
+#         uses: actions/checkout@v4
       
-      - name: Set up Python
-        uses: actions/setup-python@v5
-        with:
-          python-version: '3.13'
+#       - name: Set up Python
+#         uses: actions/setup-python@v5
+#         with:
+#           python-version: '3.13'
       
-      - name: Install dependencies
-        run: |
-          python3 -m pip install --upgrade pip
-          pip install -r requirements.txt 
+#       - name: Install dependencies
+#         run: |
+#           python3 -m pip install --upgrade pip
+#           pip install -r requirements.txt 
         
-      - name: Run Python script
-        env:
-          discord_webhook_url: ${{ secrets.DISCORD_WEBHOOK }}
-          slack_webhook_url: ${{ secrets.SLACK_WEBHOOK }}
-          telegram_bot_token: ${{ secrets.TELEGRAM_BOT_TOKEN }}
-          telegram_chat_id: ${{ secrets.TELEGRAM_CHAT_ID }}
-        run: python3 notification.py   
+#       - name: Run Python script
+#         env:
+#           discord_webhook_url: ${{ secrets.DISCORD_WEBHOOK }}
+#           slack_webhook_url: ${{ secrets.SLACK_WEBHOOK }}
+#           telegram_bot_token: ${{ secrets.TELEGRAM_BOT_TOKEN }}
+#           telegram_chat_id: ${{ secrets.TELEGRAM_CHAT_ID }}
+#         run: python3 notification.py   
       
 
       
